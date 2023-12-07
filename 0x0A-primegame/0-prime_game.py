@@ -1,42 +1,44 @@
 #!/usr/bin/python3
 """
-This module provides a solution to the Prime Game problem.
+Module: Game of choosing Prime numbers
 """
 
 
-def check_primes(n):
+def primeNumbers(n):
+    """Return list of prime numbers between 1 and n inclusive
+       Args:
+        n (int): upper boundary of range. lower boundary is always 1
     """
-    Return a list of prime numbers between 1 and n, inclusive.
-    """
-    primes_list = []
-    sieve = [True] * (n + 1)
-    for p in range(2, n + 1):
-        if sieve[p]:
-            primes_list.append(p)
-            for i in range(p * p, n + 1, p):
-                sieve[i] = False
-    return primes_list
+    primeNos = []
+    filtered = [True] * (n + 1)
+    for prime in range(2, n + 1):
+        if (filtered[prime]):
+            primeNos.append(prime)
+            for i in range(prime, n + 1, prime):
+                filtered[i] = False
+    return primeNos
 
 
 def isWinner(x, nums):
     """
-    Determine the winner of the Prime Game.
+    Determines winner of Prime Game
+    Args:
+        x (int): no. of rounds of game
+        nums (int): upper limit of range for each round
+    Return:
+        Name of winner (Maria or Ben) or None if winner cannot be found
     """
     if x is None or nums is None or x == 0 or nums == []:
         return None
-
-    maria_score = 0
-    ben_score = 0
+    Maria = Ben = 0
     for i in range(x):
-        primes_list = check_primes(nums[i])
-        if len(primes_list) % 2 == 0:
-            ben_score += 1
+        primeNos = primeNumbers(nums[i])
+        if len(primeNos) % 2 == 0:
+            Ben += 1
         else:
-            maria_score += 1
-
-    if maria_score > ben_score:
+            Maria += 1
+    if Maria > Ben:
         return 'Maria'
-    elif ben_score > maria_score:
+    elif Ben > Maria:
         return 'Ben'
-    else:
-        return None
+    return None
